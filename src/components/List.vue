@@ -11,7 +11,11 @@
     >
       <div class="title">{{ item.title }}</div>
       <div class="action">
-        <button type="button" class="btn btn-outline-primary">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          @click="pushToEdit(item.id)"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -33,7 +37,11 @@
             raised
             @click="pushToEdit(item.id)"
           /> -->
-        <button type="button" class="btn btn-outline-warning">
+        <button
+          type="button"
+          class="btn btn-outline-warning"
+          @click="updateStatusById(item.id)"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -59,7 +67,11 @@
             @click="updateStatusById(item.id, !item.status)"
           /> -->
 
-        <button type="button" class="btn btn-outline-danger">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          @click="pushToDelete(item.id)"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -91,17 +103,54 @@
 import { defineComponent, ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTodoListStore } from "../stores/todolistStore";
+import Swal from "sweetalert2";
 
 export default defineComponent({
   setup() {
     const router = useRouter();
     const todoListStore = useTodoListStore();
     const todoList = computed(() => todoListStore.todoList);
+    function pushToDelete(id) {
+      todoListStore.deleteTodo(id);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your work has been deleted",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    async function updateStatusById(id) {
+      const status = await todoListStore.updateTodoListStatus(id);
+      if (status) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been completed",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Your work has been uncompleted",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    }
+    function pushToEdit(id) {
+      router.push({ name: "Edit", params: { id } });
+    }
     onMounted(() => {
       todoListStore.fetchTodoList();
     });
     return {
       todoList,
+      pushToDelete,
+      updateStatusById,
+      pushToEdit,
     };
   },
 });

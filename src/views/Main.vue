@@ -1,26 +1,48 @@
 <template>
     <section id="container">
+      <div style="display: flex; flex-direction: row; justify-content: end; color: aliceblue; width: 73%;">
+        <h5>
+          {{ weather }}
+        </h5>
+      </div>
       <h3>Todo List</h3>
       <div class="tab">
-        <button type="button" class="btn btn-sm btn-primary">List</button>
-        <button type="button" class="btn btn-sm btn-primary">Add New Todo</button>
+        <button type="button" class="btn btn-sm btn-primary" @click="pushToList">List</button>
+        <button type="button" class="btn btn-sm btn-primary" @click="pushToAddTodo">Add New Todo</button>
       </div>
       <router-view />
-      <Toast />
     </section>
   </template>
 
 <script>
-    import { defineComponent } from 'vue';
+    import { defineComponent, onMounted, computed } from 'vue';
+    import { useRouter } from 'vue-router';
+    import { useTodoListStore } from '../stores/todolistStore';
+    
     export default defineComponent({
         name: 'Main',
         components: {
             // Button
         },
         setup() {
-            return {};
+          const router = useRouter();
+          const todoListStore = useTodoListStore();
+          const weather = computed (() => todoListStore.getCurrentWeather);
+          onMounted(() => {
+            todoListStore.getWeather();
+          });
+          const pushToAddTodo = () => {
+            router.push({ name: "Add" });
+          };
+          const pushToList = () => {
+            router.push({ name: "List" });
+          };
+            return {pushToAddTodo, pushToList, weather};
         },
     });
+
+    
+
 </script>
 
 <style lang="scss" scoped>
