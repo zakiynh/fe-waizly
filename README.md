@@ -1,7 +1,10 @@
-# Vue 3 + Vite
+How To Run This ToDo App
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+1. Run Json Server with:
+	npm json-server --watch db.json (if you install npm globally)
+	npx json-server --watch db.json (if you install npm only on project)
 
-## Recommended IDE Setup
+2. Run another terminal with:
+	npm run dev
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+ToDo App start running
