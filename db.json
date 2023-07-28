@@ -1,0 +1,28 @@
+{
+  "todoList": [
+    {
+      "title": "Learn Vue EDIT",
+      "description": "Learn Vue.js",
+      "status": false,
+      "id": 1
+    },
+    {
+      "title": "Learn React",
+      "description": "Learn React.JS",
+      "status": false,
+      "id": 2
+    },
+    {
+      "title": "Learn Angular",
+      "description": "Learning Angular",
+      "status": false,
+      "id": 3
+    },
+    {
+      "title": "Data Baru",
+      "description": "Data Baru dibuat",
+      "status": false,
+      "id": 4
+    }
+  ]
+}
