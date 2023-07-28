@@ -1,6 +1,6 @@
 <template>
     <section id="container">
-      <div style="display: flex; flex-direction: row; justify-content: end; color: aliceblue; width: 73%;">
+      <div style="display: flex; flex-direction: row; justify-content: end; color: aliceblue; width: 72%;">
         <h5>
           {{ weather }}
         </h5>
@@ -10,12 +10,13 @@
         <button type="button" class="btn btn-sm btn-primary" @click="pushToList">List</button>
         <button type="button" class="btn btn-sm btn-primary" @click="pushToAddTodo">Add New Todo</button>
       </div>
+      
       <router-view />
     </section>
   </template>
 
 <script>
-    import { defineComponent, onMounted, computed } from 'vue';
+    import { defineComponent, onMounted, computed, ref } from 'vue';
     import { useRouter } from 'vue-router';
     import { useTodoListStore } from '../stores/todolistStore';
     
@@ -28,6 +29,7 @@
           const router = useRouter();
           const todoListStore = useTodoListStore();
           const weather = computed (() => todoListStore.getCurrentWeather);
+          
           onMounted(() => {
             todoListStore.getWeather();
           });

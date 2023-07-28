@@ -4,8 +4,14 @@
       <img src="../assets/no-task.png" alt="" />
     </div> -->
   <div class="content-wrapper">
+    <div style="display: flex; flex-direction: row; justify-content: end; color: aliceblue; width: 100%;">
+        <div class="input-group rounded" style="display: flex; flex-direction: row; justify-content: end; width: 25%;">
+          <input @input="onInput($event)" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+          
+        </div>
+      </div>
     <div
-      v-for="item in todoList"
+      v-for="item in listOfTodo()"
       class="card"
       :class="{ 'todo-done': item.status, 'todo-unfinish': !item.status }"
     >
@@ -110,6 +116,19 @@ export default defineComponent({
     const router = useRouter();
     const todoListStore = useTodoListStore();
     const todoList = computed(() => todoListStore.todoList);
+    const filterSearch = ref('');
+    
+    function onInput(even) {
+      filterSearch.value = even.target.value;
+
+      return todoListStore.val
+    }
+
+    function listOfTodo() {
+      return todoList.value.filter((item) => {
+        return item.title.toLowerCase().includes(filterSearch.value.toLowerCase());
+      });
+    }
     function pushToDelete(id) {
       todoListStore.deleteTodo(id);
       Swal.fire({
@@ -151,6 +170,8 @@ export default defineComponent({
       pushToDelete,
       updateStatusById,
       pushToEdit,
+      onInput,
+      listOfTodo
     };
   },
 });
